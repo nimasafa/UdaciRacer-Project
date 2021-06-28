@@ -321,10 +321,20 @@ function defaultFetchOpts() {
 
 function getTracks() {
 	// GET request to `${SERVER}/api/tracks`
+	return fetch(`${SERVER}/api/tracks`)
+	.then(response => response.json())
+	// NS: Should remove the following line with console.log
+	.then(json => console.log(json))
+	.catch(error => console.log("Error in the getTracks request:", error));
 }
 
 function getRacers() {
 	// GET request to `${SERVER}/api/cars`
+	return fetch(`${SERVER}/api/cars`)
+	.then(response => response.json())
+	// NS: Should remove the following line with console.log
+	.then(json => console.log(json))
+	.catch(error => console.log("Error in the getRacers request:", error));
 }
 
 function createRace(player_id, track_id) {
@@ -344,6 +354,11 @@ function createRace(player_id, track_id) {
 
 function getRace(id) {
 	// GET request to `${SERVER}/api/races/${id}`
+	return fetch(`${SERVER}/api/races/${id}`)
+	.then(response => response.json())
+	// NS: Should remove the following line with console.log
+	.then(json => console.log(json))
+	.catch(error => console.log("Error in the getRace request:", error));
 }
 
 function startRace(id) {
@@ -352,11 +367,19 @@ function startRace(id) {
 		...defaultFetchOpts(),
 	})
 	.then(res => res.json())
-	.catch(err => console.log("Problem with getRace request::", err))
+	.catch(err => console.log("Problem with startRace request::", err))
 }
 
 function accelerate(id) {
 	// POST request to `${SERVER}/api/races/${id}/accelerate`
 	// options parameter provided as defaultFetchOpts
 	// no body or datatype needed for this request
+	return fetch(`${SERVER}/api/races/${id}/accelerate`, {
+		method: 'POST',
+		...defaultFetchOpts(),
+	})
+	.then(res => res.json())
+	// NS: Should remove the following line with console.log
+	.then(json => console.log(json))
+	.catch(err => console.log("Problem with accelerate request::", err))
 }
