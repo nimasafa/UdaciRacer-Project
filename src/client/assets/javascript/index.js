@@ -165,7 +165,7 @@ async function runCountdown() {
 				}, 1000);
 		})
 	} catch(error) {
-		console.log(error);
+		console.log("Problem with runCountdown: ", error.message);
 	}
 }
 
@@ -182,7 +182,7 @@ function handleSelectPodRacer(target) {
 	target.classList.add('selected')
 
 	// TODO - save the selected racer to the store
-	store.player_id = target.id;
+	store.player_id = parseInt(target.id);
 }
 
 function handleSelectTrack(target) {
@@ -198,13 +198,13 @@ function handleSelectTrack(target) {
 	target.classList.add('selected')
 
 	// TODO - save the selected track id to the store
-	store.track_id = target.id;
+	store.track_id = parseInt(target.id);
 }
 
 function handleAccelerate() {
 	console.log("accelerate button clicked")
 	// TODO - Invoke the API call to accelerate
-	celerate(store.race_id)
+	accelerate(store.race_id)
 	.catch(error => console.log("Error in the handleAccelerate request:", error));
 }
 
@@ -362,15 +362,15 @@ function defaultFetchOpts() {
 function getTracks() {
 	// GET request to `${SERVER}/api/tracks`
 	return fetch(`${SERVER}/api/tracks`)
-	.then(response => response.json())
-	.catch(error => console.log("Error in the getTracks request:", error));
+			.then(response => response.json())
+			.catch(error => console.log("Error in the getTracks request:", error));
 }
 
 function getRacers() {
 	// GET request to `${SERVER}/api/cars`
 	return fetch(`${SERVER}/api/cars`)
-	.then(response => response.json())
-	.catch(error => console.log("Error in the getRacers request:", error));
+			.then(response => response.json())
+			.catch(error => console.log("Error in the getRacers request:", error));
 }
 
 function createRace(player_id, track_id) {
@@ -379,10 +379,10 @@ function createRace(player_id, track_id) {
 	const body = { player_id, track_id }
 	
 	return fetch(`${SERVER}/api/races`, {
-		method: 'POST',
-		...defaultFetchOpts(),
-		dataType: 'jsonp',
-		body: JSON.stringify(body)
+			method: 'POST',
+			...defaultFetchOpts(),
+			dataType: 'jsonp',
+			body: JSON.stringify(body)
 	})
 	.then(res => res.json())
 	.catch(err => console.log("Problem with createRace request::", err))
@@ -391,16 +391,15 @@ function createRace(player_id, track_id) {
 function getRace(id) {
 	// GET request to `${SERVER}/api/races/${id}`
 	return fetch(`${SERVER}/api/races/${id}`)
-	.then(response => response.json())
-	.catch(error => console.log("Error in the getRace request:", error));
+			.then(response => response.json())
+			.catch(error => console.log("Error in the getRace request:", error));
 }
 
 function startRace(id) {
 	return fetch(`${SERVER}/api/races/${id}/start`, {
-		method: 'POST',
-		...defaultFetchOpts(),
+			method: 'POST',
+			...defaultFetchOpts(),
 	})
-	.then(res => res.json())
 	.catch(err => console.log("Problem with startRace request::", err))
 }
 
@@ -409,9 +408,8 @@ function accelerate(id) {
 	// options parameter provided as defaultFetchOpts
 	// no body or datatype needed for this request
 	return fetch(`${SERVER}/api/races/${id}/accelerate`, {
-		method: 'POST',
-		...defaultFetchOpts(),
+			method: 'POST',
+			...defaultFetchOpts(),
 	})
-	.then(res => res.json())
 	.catch(err => console.log("Problem with accelerate request::", err))
 }
