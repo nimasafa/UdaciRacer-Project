@@ -34,7 +34,17 @@ async function onPageLoad() {
 
 function setupClickHandlers() {
 	document.addEventListener('click', function(event) {
-		const { target } = event
+		// event.stopPropagation();
+		let parent = event.target.parentElement
+		const { target } = event;
+		
+		if(parent.matches('.card.track')){
+			handleSelectTrack(parent);
+		}
+		
+		if(parent.matches('.card.podracer')){
+			handleSelectPodRacer(parent);
+		}
 
 		// Race track form field
 		if (target.matches('.card.track')) {
